@@ -7,14 +7,24 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor //생성자를 만들어줌
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+    //생성자 1개는 Autowired 생략가능
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        System.out.println("memberRepository = " + memberRepository);
+//        System.out.println("discountPolicy = " + discountPolicy);
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     //DIP 위반으로 인한 변경
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -24,6 +34,17 @@ public class OrderServiceImpl implements OrderService{
     //filed injection is not recommand
 //    @Autowired private MemberRepository memberRepository;
 //    @Autowired private DiscountPolicy discountPolicy;
+
+//    //수정자 의존관계
+//    @Autowired
+//    public void setMemberRepository(MemberRepository memberRepository){
+//        this.memberRepository = memberRepository;
+//    }
+//
+//    @Autowired
+//    public void setDiscountPolicy(DiscountPolicy discountPolicy){
+//        this.discountPolicy = discountPolicy;
+//    }
 
 //    Setter 주입
 //    @Autowired(required = false)//주입할 대상이 없어도 진행을 위해 false
@@ -37,14 +58,6 @@ public class OrderServiceImpl implements OrderService{
 //        System.out.println("setter discountPolicy = " + discountPolicy);
 //        this.discountPolicy = discountPolicy;
 //    }
-
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println("memberRepository = " + memberRepository);
-        System.out.println("discountPolicy = " + discountPolicy);
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
 
 //    일반 매서드 주입, 매개변수가 스프링컨테이너가 관리하는 스프링 빈이여야만 된다.
 //    @Autowired
