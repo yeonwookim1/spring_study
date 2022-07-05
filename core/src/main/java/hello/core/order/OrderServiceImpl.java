@@ -9,22 +9,24 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor //생성자를 만들어줌
+//@RequiredArgsConstructor //생성자를 만들어줌
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+
     //생성자 1개는 Autowired 생략가능
 //    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        System.out.println("memberRepository = " + memberRepository);
-//        System.out.println("discountPolicy = " + discountPolicy);
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        System.out.println("memberRepository = " + memberRepository);
+        System.out.println("discountPolicy = " + discountPolicy);
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     //DIP 위반으로 인한 변경
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
