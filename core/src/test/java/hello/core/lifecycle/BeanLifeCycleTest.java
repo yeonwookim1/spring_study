@@ -19,7 +19,6 @@ public class BeanLifeCycleTest {
     }
 
     @Configuration
-    @ComponentScan
     static class LifeCycleConfig{
 //        @Bean(initMethod = "init", destroyMethod = "close") //== @Bean(initMethod = "init") destroyMethod 추론
         @Bean

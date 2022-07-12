@@ -46,7 +46,7 @@ public class NetworkClient  { //implements InitializingBean, DisposableBean
         System.out.println("NetworkClient.close");
         disconnect();
     }
-    
+
     //빈 설정정보에 등록
 //    public void init() {
 //        System.out.println("NetworkClient.init");
