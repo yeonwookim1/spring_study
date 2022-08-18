@@ -12,3 +12,25 @@
 3. 프로젝트 셋팅
    - lombok 사용시 plugin에서 lombok 다운
    - Compiler -> Annotation Processros에서 Enable annotation processing 체크
+
+
+
+4. JPA
+
+   - 엔티티 :  테이블과의 매핑
+
+   - @Id : 기본키
+
+   - ```java
+     @Entity
+     public class Member {
+
+      	@Id
+         @GeneratedValue
+         private Long id;
+     ...
+
+     }
+     ```
+
+     ​
