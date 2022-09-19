@@ -49,7 +49,7 @@ public class OrderServiceTest {
         Assert.assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, getOrder.getStatus());
         Assert.assertEquals("주문한 상품 종류 수가 정확", 1, getOrder.getOrderItems().size());
         Assert.assertEquals("주문 가격은 가격 * 수량", book.getPrice()*orderCount, getOrder.getTotalPrice());
-        Assert.assertEquals("주문 수량만큼 재고 감소", book.getStockQuantity() - orderCount, book.getStockQuantity());
+        Assert.assertEquals("주문 수량만큼 재고 감소", 10 - orderCount, book.getStockQuantity());
 
 
     }
@@ -86,16 +86,6 @@ public class OrderServiceTest {
 
         Assert.assertEquals("주문 취소시 상태는 cancel", OrderStatus.CANCEL, getOrder.getStatus());
         Assert.assertEquals("취소하면 재고는 원래 수량 복귀", 10, item.getStockQuantity());
-
-    }
-
-    @Test
-    public void 재고수량초과() throws Exception{
-        //given
-
-        //when
-
-        //then
 
     }
 
