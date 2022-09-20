@@ -50,8 +50,6 @@ public class OrderServiceTest {
         Assert.assertEquals("주문한 상품 종류 수가 정확", 1, getOrder.getOrderItems().size());
         Assert.assertEquals("주문 가격은 가격 * 수량", book.getPrice()*orderCount, getOrder.getTotalPrice());
         Assert.assertEquals("주문 수량만큼 재고 감소", 10 - orderCount, book.getStockQuantity());
-
-
     }
 
     @Test(expected = NotEnoughStockException.class)
@@ -59,7 +57,6 @@ public class OrderServiceTest {
         //given
         Member member = createMember();
         Item item = createBook("JPA 책", 10000, 10);
-
         int orderCount = 11;
 
         //when
@@ -83,7 +80,6 @@ public class OrderServiceTest {
 
         //then
         Order getOrder = orderRepository.findOne(orderId);
-
         Assert.assertEquals("주문 취소시 상태는 cancel", OrderStatus.CANCEL, getOrder.getStatus());
         Assert.assertEquals("취소하면 재고는 원래 수량 복귀", 10, item.getStockQuantity());
 
