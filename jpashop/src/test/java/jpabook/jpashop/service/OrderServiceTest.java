@@ -36,7 +36,9 @@ public class OrderServiceTest {
     public void 상품주문() throws Exception{
         //given
         Member member = createMember();
-        Book book = createBook("JPA 책", 10000, 10);
+        int count = 10;
+        int price = 10000;
+        Book book = createBook("JPA 책", price, count);
 
         int orderCount = 2;
 
@@ -56,7 +58,9 @@ public class OrderServiceTest {
     public void 상품주문_재고수량초과() throws Exception{
         //given
         Member member = createMember();
-        Item item = createBook("JPA 책", 10000, 10);
+        int count = 10;
+        int price = 10000;
+        Item item = createBook("JPA 책", price, count);
         int orderCount = 11;
 
         //when
