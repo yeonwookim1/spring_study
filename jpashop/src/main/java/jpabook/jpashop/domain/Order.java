@@ -38,7 +38,7 @@ public class Order {
      * persist(order)
      */
 
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")   //주인관계
     private Delivery delivery;
 
