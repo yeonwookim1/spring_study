@@ -3,7 +3,9 @@
 
 
 2. JPA
-   - 강력한 자바 ORM 표준기술
+   - Java Persistence API
+   - 강력한 자바 ORM 표준기술의 인터페이스
+   - 인터페이스를 구현해서 사용 (ex: Hibernate)
 
 
 
