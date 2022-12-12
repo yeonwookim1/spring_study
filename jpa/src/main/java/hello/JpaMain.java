@@ -24,14 +24,19 @@ public class JpaMain {
 //            em.persist(member);
 
             //수정
-//            Member findMember = em.find(Member.class, 12L);
-//            System.out.println(findMember.getName());
-//            //persist를 하지 않아도 값이 변경된다.
-//            findMember.setName("kyw");
+            Member findMember = em.find(Member.class, 1L);
+            System.out.println("findMember.getId() = " + findMember.getId());
+            System.out.println(findMember.getName());
+
+            //persist를 하지 않아도 값이 변경된다.
+            findMember.setName("spirng_jpa");
 
             //jpql
             //객체를 대상으로 쿼리
-            List<Member> resultList = em.createQuery("select m from Member as m", Member.class).getResultList();
+            List<Member> resultList = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(10)
+                    .getResultList();
 
             for(Member m : resultList){
                 System.out.println(m.getName());
