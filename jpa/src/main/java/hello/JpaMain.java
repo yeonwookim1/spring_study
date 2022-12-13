@@ -18,16 +18,14 @@ public class JpaMain {
 
         try{
             //삽입
-//            Member member = new Member();
-//            member.setId(12L);
-//            member.setName("kyw");
-//            em.persist(member);
+            Member member = new Member();
+            member.setId(12L);
+            member.setName("kyw");
 
             //수정
             Member findMember = em.find(Member.class, 1L);
             System.out.println("findMember.getId() = " + findMember.getId());
             System.out.println(findMember.getName());
-
             //persist를 하지 않아도 값이 변경된다.
             findMember.setName("spirng_jpa");
 
@@ -41,6 +39,18 @@ public class JpaMain {
             for(Member m : resultList){
                 System.out.println(m.getName());
             }
+
+
+            //비영속
+            Member member1 = new Member();
+            member1.setId(27L);
+            member1.setName("kyw001");
+
+            //영속
+            em.persist(member1);
+
+            Member findMember1 = em.find(Member.class, 27L);
+
 
 
             tx.commit();
