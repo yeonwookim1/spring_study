@@ -11,6 +11,9 @@ public class Member {
     private Long id;
     private String name;
 
+    //JPA는 기본 생성자가 필수로 있어야 한다.
+    public Member(){}
+
     public Member(Long id, String name){
         this.id = id;
         this.name = name;

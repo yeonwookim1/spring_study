@@ -18,7 +18,7 @@ public class JpaMain {
 
         try{
             //삽입
-            Member member = new Member(12L, "kyw");
+//            Member member = new Member(12L, "kyw");
 
             //수정
 //            Member findMember = em.find(Member.class, 1L);
@@ -56,13 +56,18 @@ public class JpaMain {
 //            em.persist(memberC1);
 //            em.persist(memberC2);
 
+            //flush
+//            Member fMember = new Member(200L,"FLUSH");
+//            em.persist(fMember);
+//            em.flush();
+//            System.out.println("flush");
 
-            Member fMember = new Member(200L,"FLUSH");
-            em.persist(fMember);
-            em.flush();
-            System.out.println("flush");
+            //준영속
+            Member member1 = em.find(Member.class,201L);
+            member1.setName("detach2");
+//            em.detach(member1);
 
-
+            System.out.println("===============");
             tx.commit();
         }catch(Exception e){
             tx.rollback();
