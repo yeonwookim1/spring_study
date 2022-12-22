@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Random;
 
 public class JpaMain {
 
@@ -63,9 +64,16 @@ public class JpaMain {
 //            System.out.println("flush");
 
             //준영속
-            Member member1 = em.find(Member.class,201L);
-            member1.setName("detach2");
+//            Member member1 = em.find(Member.class,201L);
+//            member1.setName("detach2");
 //            em.detach(member1);
+
+
+
+            Member member = new Member();
+            member.setId(new Random().nextLong());
+            member.setName("kyw");
+            em.persist(member);
 
             System.out.println("===============");
             tx.commit();
