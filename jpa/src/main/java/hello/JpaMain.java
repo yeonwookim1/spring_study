@@ -68,11 +68,16 @@ public class JpaMain {
 //            member1.setName("detach2");
 //            em.detach(member1);
 
-
+//            Member member = new Member();
+//            member.setId(new Random().nextLong());
+//            member.setName("kyw");
+//            em.persist(member);
 
             Member member = new Member();
-            member.setId(new Random().nextLong());
-            member.setName("kyw");
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(RoleType.USER);
+
             em.persist(member);
 
             System.out.println("===============");
