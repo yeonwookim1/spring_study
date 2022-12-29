@@ -73,12 +73,32 @@ public class JpaMain {
 //            member.setName("kyw");
 //            em.persist(member);
 
+            //IDENTITY 전략
             Member member = new Member();
-            member.setId(1L);
             member.setUsername("A");
             member.setRoleType(RoleType.USER);
-
+            
+            System.out.println("====== GenerationType.IDENTITY 일때는 ID 값을 위해 persisit 때 insert 쿼리 =========");
             em.persist(member);
+            System.out.println("===============");
+            System.out.println("member.getId() = " + member.getId());
+
+
+            //table 전략
+            Member member1 = new Member();
+            member.setUsername("A");
+
+            Member member2 = new Member();
+            member.setUsername("B");
+            member.setRoleType(RoleType.USER);
+
+            em.persist(member1);    //1, 51
+            em.persist(member2);    //MEM
+
+//            Member member1 = em.find(Member.class, 1L);
+//            member1.setUsername("AAA");
+//            member1.setRoleType(RoleType.ADMIN);
+
 
             System.out.println("===============");
             tx.commit();
