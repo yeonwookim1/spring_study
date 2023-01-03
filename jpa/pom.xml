@@ -8,8 +8,6 @@
     <artifactId>ex1-hello-jpa</artifactId>
     <version>1.0.0</version>
 
-
-
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
