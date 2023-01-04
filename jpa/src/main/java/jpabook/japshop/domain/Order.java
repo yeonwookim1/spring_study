@@ -13,6 +13,8 @@ public class Order {
 
     @Column(name = "member_id")
     private Long memberId;
+
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)

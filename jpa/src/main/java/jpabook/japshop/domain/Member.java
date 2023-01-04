@@ -1,18 +1,18 @@
 package jpabook.japshop.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Member {
 
-    @Id @GeneratedValue //defalut auto
+    @Id @GeneratedValue //default auto
     @Column(name = "member_id")
     private Long id;
+
+    @Column(length = 10)
     private String name;
-    private String citu;
+
+    private String city;
     private String street;
     private String zipCode;
 
@@ -32,12 +32,12 @@ public class Member {
         this.name = name;
     }
 
-    public String getCitu() {
-        return citu;
+    public String getCity() {
+        return city;
     }
 
-    public void setCitu(String citu) {
-        this.citu = citu;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getStreet() {
