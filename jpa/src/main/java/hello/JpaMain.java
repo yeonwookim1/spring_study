@@ -11,7 +11,7 @@ public class JpaMain {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
 
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -74,30 +74,52 @@ public class JpaMain {
 //            em.persist(member);
 
             //IDENTITY 전략
-            Member member = new Member();
-            member.setUsername("A");
-            member.setRoleType(RoleType.USER);
-            
-            System.out.println("====== GenerationType.IDENTITY 일때는 ID 값을 위해 persisit 때 insert 쿼리 =========");
-            em.persist(member);
-            System.out.println("===============");
-            System.out.println("member.getId() = " + member.getId());
-
-
-            //table 전략
-            Member member1 = new Member();
-            member.setUsername("A");
-
-            Member member2 = new Member();
-            member.setUsername("B");
-            member.setRoleType(RoleType.USER);
-
-            em.persist(member1);    //1, 51
-            em.persist(member2);    //MEM
+//            Member member = new Member();
+//            member.setUsername("A");
+//            member.setRoleType(RoleType.USER);
+//
+//            System.out.println("====== GenerationType.IDENTITY 일때는 ID 값을 위해 persisit 때 insert 쿼리 =========");
+//            em.persist(member);
+//            System.out.println("===============");
+//            System.out.println("member.getId() = " + member.getId());
+//
+//
+//            //table 전략
+//            Member member1 = new Member();
+//            member.setUsername("A");
+//
+//            Member member2 = new Member();
+//            member.setUsername("B");
+//            member.setRoleType(RoleType.USER);
+//
+//            em.persist(member1);    //1, 51
+//            em.persist(member2);    //MEM
 
 //            Member member1 = em.find(Member.class, 1L);
 //            member1.setUsername("AAA");
 //            member1.setRoleType(RoleType.ADMIN);
+
+
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            User user = new User();
+            user.setUserName("user3");
+            user.setTeam(team);
+            em.persist(user);
+
+            em.flush();
+            em.clear();
+
+            User findUser = em.find(User.class, user.getId());
+            List<User> userList = findUser.getTeam().getUsers();
+
+
+            for(User u : userList){
+                System.out.println("u.name = " + u.getUserName());
+            }
+
 
 
             System.out.println("===============");
