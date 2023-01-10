@@ -101,20 +101,25 @@ public class JpaMain {
 
 
             Team team = new Team();
-            team.setName("TeamA");
+            team.setName("TeamB");
             em.persist(team);
 
             User user = new User();
-            user.setUserName("user3");
-            user.setTeam(team);
+            user.setUserName("user1");
             em.persist(user);
 
+            //team.getUsers().add(user);  //양방향 매핑시 양쪽 다 셋팅 해주는게 좋음 -> 편의 매소드 사용
+
+            team.addUser(user);
+            //user나 team 한쪽에서만 편의매서드를 사용
+
+            //flush, clear 안해주면 1차캐시만 참고하기 때문에 조회가 되지 않음, 양쪽 다 셋팅 하는 것
             em.flush();
             em.clear();
 
+            
             User findUser = em.find(User.class, user.getId());
             List<User> userList = findUser.getTeam().getUsers();
-
 
             for(User u : userList){
                 System.out.println("u.name = " + u.getUserName());
