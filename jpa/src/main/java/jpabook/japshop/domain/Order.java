@@ -2,6 +2,8 @@ package jpabook.japshop.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -11,8 +13,15 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
+//    @Column(name = "member_id")
+//    private Long memberId;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy="order")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
@@ -28,12 +37,12 @@ public class Order {
         this.id = id;
     }
 
-    public Long getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public LocalDateTime getOrderDate() {
@@ -50,5 +59,12 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    //연관관계 편의 매소드
+    public void addOrderItem(OrderItem orderItem) {
+        //주인 먼저 set
+        orderItem.setOrder(this);
+        orderItems.add(orderItem);
     }
 }

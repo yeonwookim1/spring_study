@@ -117,7 +117,7 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            
+
             User findUser = em.find(User.class, user.getId());
             List<User> userList = findUser.getTeam().getUsers();
 

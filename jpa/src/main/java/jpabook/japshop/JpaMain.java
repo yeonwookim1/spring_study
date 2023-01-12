@@ -2,6 +2,8 @@ package jpabook.japshop;
 
 import hello.Member;
 import hello.RoleType;
+import jpabook.japshop.domain.Order;
+import jpabook.japshop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,6 +23,12 @@ public class JpaMain {
         tx.begin();
 
         try{
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
+
+//            OrderItem orderItem = new OrderItem();
+//            orderItem.setOrder(order);
+//            em.persist(orderItem);
 
             System.out.println("===============");
             tx.commit();
