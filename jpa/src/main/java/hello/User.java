@@ -12,13 +12,15 @@ public class User {
     @Column(name = "username")
     private String userName;
 
+
+
 //    @Column(name = "team_id")
 //    private Long teamId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "team_id")
+//    private Team team;
+//
     public Long getId() {
         return id;
     }
@@ -34,12 +36,12 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
+//
+//    public Team getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(Team team) {
+//        this.team = team;
+//    }
 }

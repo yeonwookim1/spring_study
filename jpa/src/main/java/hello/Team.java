@@ -13,13 +13,17 @@ public class Team {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "team")   //ManyToOne의 반대 방향, 참조하려고 사용, mappedBy = '변수명'
+    @OneToMany
+    @JoinColumn(name = "team_id")
     private List<User> users = new ArrayList<>();
 
-    public void addUser(User user){
-        user.setTeam(this); //주인에 먼저 셋팅
-        users.add(user);
-    }
+//    @OneToMany(mappedBy = "team")   //ManyToOne의 반대 방향, 참조하려고 사용, mappedBy = '변수명'
+//    private List<User> users = new ArrayList<>();
+
+//    public void addUser(User user){
+//        user.setTeam(this); //주인에 먼저 셋팅
+//        users.add(user);
+//    }
 
     public Long getId() {
         return id;
