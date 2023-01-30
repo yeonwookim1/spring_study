@@ -12,14 +12,19 @@ public class User {
     @Column(name = "username")
     private String userName;
 
+    //일대일
+    @OneToOne
+    @JoinColumn(name = "locker_id")
+    private Locker locker;
 
-
+//일대다
 //    @Column(name = "team_id")
 //    private Long teamId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "team_id")
-//    private Team team;
+    //다대일
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 //
     public Long getId() {
         return id;
