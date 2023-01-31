@@ -1,6 +1,11 @@
 package hello;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User {
@@ -11,6 +16,14 @@ public class User {
 
     @Column(name = "username")
     private String userName;
+
+    //다대다
+//    @ManyToMany
+//    @JoinTable(name = "user_product")
+//    private List<Product> products  = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<userProduct> userProducts = new ArrayList<>();
+
 
     //일대일
     @OneToOne
@@ -25,8 +38,11 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-//
+
     public Long getId() {
+        List<String> list = new ArrayList<>();
+        String[] arr = list.stream().toArray(String[]::new);
+        list =Arrays.stream(arr).collect(Collectors.toList());
         return id;
     }
 
