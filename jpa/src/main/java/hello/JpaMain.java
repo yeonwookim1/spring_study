@@ -1,5 +1,7 @@
 package hello;
 
+import hello.item.Movie;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -136,6 +138,21 @@ public class JpaMain {
             team.getUsers().add(user);
 
             em.persist(team);
+
+            System.out.println("========상속 매핑=======");
+
+            Movie movie = new Movie();
+            movie.setDirector("aaa");
+            movie.setActor("sss");
+            movie.setName("pocketmon");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+            em.flush();
+            em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println(findMovie);
 
 
             System.out.println("===============");
