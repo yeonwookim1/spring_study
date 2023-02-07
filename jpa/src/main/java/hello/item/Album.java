@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("AL")
+@DiscriminatorValue("ALBUM")
 public class Album extends PItem {
 
     private String artist;

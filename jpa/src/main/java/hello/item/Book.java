@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("BK")
+@DiscriminatorValue("BOOK")
 public class Book extends PItem {
 
     private String author;

@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("MV")
+@DiscriminatorValue("MOVIE")
 public class Movie extends PItem {
 
     private String director;

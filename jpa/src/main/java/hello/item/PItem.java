@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+//조인전략(JOINED), 하나의 테이블 전략(SINGLE_TABLE), 각각 테이블 전략(TABLE_PER_CLASS) 사용 가능
 @DiscriminatorColumn
 public abstract class PItem {
 
