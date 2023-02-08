@@ -1,6 +1,7 @@
 package hello;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class User {
+public class User extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "user_id")

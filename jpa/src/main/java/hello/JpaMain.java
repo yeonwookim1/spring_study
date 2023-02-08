@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -130,11 +131,15 @@ public class JpaMain {
             //일대다 관계
             User user = new User();
             user.setUserName("test");
+            user.setCreateBy("kyw");
+            user.setCreateDate(LocalDateTime.now());
 
             em.persist(user);
 
             Team team = new Team();
             team.setName("manU");
+            team.setCreateBy("kyw");
+            team.setCreateDate(LocalDateTime.now());
             team.getUsers().add(user);
 
             em.persist(team);
@@ -148,8 +153,8 @@ public class JpaMain {
             movie.setPrice(10000);
 
             em.persist(movie);
-            em.flush();
-            em.clear();
+//            em.flush();
+//            em.clear();
 
             Movie findMovie = em.find(Movie.class, movie.getId());
             System.out.println(findMovie);
