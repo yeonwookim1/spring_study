@@ -2,6 +2,7 @@ package jpabook.japshop;
 
 import hello.Member;
 import hello.RoleType;
+import jpabook.japshop.domain.Book;
 import jpabook.japshop.domain.Order;
 import jpabook.japshop.domain.OrderItem;
 
@@ -29,6 +30,12 @@ public class JpaMain {
 //            OrderItem orderItem = new OrderItem();
 //            orderItem.setOrder(order);
 //            em.persist(orderItem);
+
+            Book book = new Book();
+            book.setName("JPA");
+
+            em.persist(book);
+
 
             System.out.println("===============");
             tx.commit();
