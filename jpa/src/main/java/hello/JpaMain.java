@@ -223,6 +223,20 @@ public class JpaMain {
                     + emf.getPersistenceUnitUtil().isLoaded(infoProxy));
 
 
+            User user = new User();
+            user.setUserName("lazyUser");
+            Team lazyTeam = new Team();
+            em.persist(lazyTeam);
+            user.setTeam(lazyTeam);
+            em.persist(user);
+            em.flush();
+            em.clear();
+
+            User lazyUser = em.find(User.class, user.getId());
+            System.out.println("lazyUser.getTeam().getClass() = " + lazyUser.getTeam().getClass());
+
+            em.createQuery("select m from User m join fetch m.team", User.class)
+                            .getResultList();
 
 
             System.out.println("===============");

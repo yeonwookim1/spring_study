@@ -36,7 +36,7 @@ public class User extends BaseEntity {
 //    private Long teamId;
 
     //다대일
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;
 
