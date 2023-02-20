@@ -239,6 +239,24 @@ public class JpaMain {
                             .getResultList();
 
 
+
+            //영속성 전이 CASCADE
+
+            Parent parent = new Parent();
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+            //cascade 추가하면 child는 persist를 안해도 된다.
+//            em.persist(child1);
+//            em.persist(child2);
+
+
+
             System.out.println("===============");
             tx.commit();
         }catch(Exception e){
