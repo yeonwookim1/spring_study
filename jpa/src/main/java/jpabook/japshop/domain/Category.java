@@ -1,5 +1,7 @@
 package jpabook.japshop.domain;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public class Category extends BaseEntity {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
