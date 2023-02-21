@@ -255,6 +255,11 @@ public class JpaMain {
 //            em.persist(child1);
 //            em.persist(child2);
 
+            //고아객체
+            em.flush();
+            em.clear();
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
 
 
             System.out.println("===============");
