@@ -17,4 +17,5 @@ public class Delivery extends BaseEntity {
 
     @OneToOne(mappedBy="delivery", fetch = FetchType.LAZY)  //OneToOne관계는 양쪽 다 해줘야한다.
     private Order order;
+
 }

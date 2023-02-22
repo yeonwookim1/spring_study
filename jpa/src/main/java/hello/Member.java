@@ -25,7 +25,7 @@ import java.util.Date;
 //            generator = "MEMBER_SEQ_GENERATOR")
 //    private Long id;
 
-@Entity
+//@Entity
 public class Member {
 
     @Id

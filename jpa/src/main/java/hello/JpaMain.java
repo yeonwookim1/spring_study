@@ -260,7 +260,13 @@ public class JpaMain {
             em.clear();
             Parent findParent = em.find(Parent.class, parent.getId());
             findParent.getChildList().remove(0);
+            
+            //임베디드 타입
+            User user3 = new User();
+            user3.setUserName("hello");
+            user3.setHomeAddress(new Address("seoul", "sangam", "54"));
 
+            em.persist(user3);
 
             System.out.println("===============");
             tx.commit();

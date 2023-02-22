@@ -40,6 +40,20 @@ public class User extends BaseEntity {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    @Embedded
+    private Period workPeriod;
+
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "work_city")),
+            @AttributeOverride(name = "street", column = @Column(name = "work_street")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "work_zipCode"))
+    })
+    private Address workAddress;
+
     public Long getId() {
         List<String> list = new ArrayList<>();
         String[] arr = list.stream().toArray(String[]::new);
@@ -65,5 +79,21 @@ public class User extends BaseEntity {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
