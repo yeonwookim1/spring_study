@@ -268,6 +268,31 @@ public class JpaMain {
 
             em.persist(user3);
 
+
+            //값타입 변경 및 불변객체
+
+            Address address = new Address("seoul", "sangamdong", "52");
+
+            User user4 = new User();
+            user4.setUserName("user4");
+            user4.setHomeAddress(address);
+            em.persist(user4);
+
+            User user5 = new User();
+            user5.setUserName("user4");
+            user5.setHomeAddress(address);
+            em.persist(user5);
+
+            //user4, user5 다 바뀌게 된다.
+//            user4.getHomeAddress().setCity("usa");
+
+            //새로운 객체를 할당하여 변경해야 함
+            Address newAddress = new Address(address.getCity(), address.getStreet(), address.getZipCode());
+            user4.setHomeAddress(newAddress);
+            //값타입을 불변객체로 선언
+//            user4.getHomeAddress().setCity("korea");
+
+
             System.out.println("===============");
             tx.commit();
         }catch(Exception e){
