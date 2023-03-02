@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -292,6 +293,34 @@ public class JpaMain {
             //값타입을 불변객체로 선언
 //            user4.getHomeAddress().setCity("korea");
 
+            //값타입 컬렉션
+            User user6 = new User();
+            user6.setUserName("test1");
+            user6.setHomeAddress(new Address("city1", "steet1", "zipcode1"));
+
+            user6.getFavoriteFoods().add("치킨");
+
+            user6.getAddressHistory().add(new AddressEntity("oldCity", "oldStreet1", "oldZipcode1"));
+            user6.getAddressHistory().add(new AddressEntity("old1", "oldStreet1", "oldZipcode1"));
+
+            em.persist(user6);
+            em.flush();
+            em.clear();
+
+            User findUser6 = em.find(User.class, user6.getId());
+
+            //set을 해줄때는 새로운 객체로 교체를 해준다.
+            findUser6.getAddressHistory().add(new AddressEntity("newCity", "oldStreet1", "oldZipcode1"));
+
+            //치킨->한식
+            findUser6.getFavoriteFoods().remove("치킨");
+            findUser6.getFavoriteFoods().add("한식");
+            System.out.println("findUser6.getId() = " + findUser6.getId());
+
+            findUser6.getAddressHistory().remove(new AddressEntity("old1", "oldStreet1", "oldZipcode1"));
+            findUser6.getAddressHistory().add(new AddressEntity("newCity1", "oldStreet1", "oldZipcode1"));
+
+            em.persist(findUser6);
 
             System.out.println("===============");
             tx.commit();

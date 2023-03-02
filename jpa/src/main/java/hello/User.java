@@ -2,10 +2,7 @@ package hello;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -54,6 +51,19 @@ public class User extends BaseEntity {
     })
     private Address workAddress;
 
+    @ElementCollection
+    @CollectionTable(name = "favorite_food", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "food_name")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+//    @ElementCollection
+//    @CollectionTable(name = "address", joinColumns = @JoinColumn(name = "user_id"))
+//    private List<Address> addressHistory = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<AddressEntity> addressHistory = new ArrayList<>();
+
     public Long getId() {
         List<String> list = new ArrayList<>();
         String[] arr = list.stream().toArray(String[]::new);
@@ -96,4 +106,21 @@ public class User extends BaseEntity {
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
     }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<AddressEntity> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<AddressEntity> addressHistory) {
+        this.addressHistory = addressHistory;
+    }
+
 }
