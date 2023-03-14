@@ -3,10 +3,10 @@ package hello;
 import hello.item.Movie;
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
@@ -321,6 +321,32 @@ public class JpaMain {
             findUser6.getAddressHistory().add(new AddressEntity("newCity1", "oldStreet1", "oldZipcode1"));
 
             em.persist(findUser6);
+
+
+            System.out.println("================JPQL================");
+
+            List<User> result = em.createQuery(
+                    "select m From User m ", User.class).getResultList();
+
+            for(User itUser : result){
+                System.out.println("itUser.getUsername() = " + itUser.getUserName());
+            }
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+
+            Root<User> m = query.from(User.class);
+            //CriteriaQuery<User> cq = query.select(m).where(cb.equal(m.get("USERNAME"),  "kim"))
+            CriteriaQuery<User> cq = query.select(m);
+            String username = "test";
+            if(username != null){
+                cq = cq.where(cb.equal(m.get("USERNAME"),  "kim"));
+
+            }
+            List<User> resultList = em.createQuery(cq).getResultList();
+
+            //native query
+            em.createNativeQuery("selecft * from user");
 
             System.out.println("===============");
             tx.commit();
