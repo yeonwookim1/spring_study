@@ -18,7 +18,7 @@ public class JpalMain {
             JMember member = new JMember();
             String memberName = "member"  + new Date().getTime();
             member.setName(memberName);
-            member.setAge(20);
+            member.setAge(30);
             em.persist(member);
 
             //반환타입이 명확
@@ -44,6 +44,43 @@ public class JpalMain {
                     .setParameter("name", "member1678802651403").getSingleResult();
 
             System.out.println("singleResult2 = " + singleResult2);
+
+
+            JMember jm = new JMember();
+            jm.setName("findJ");
+            jm.setAge(10);
+            em.persist(jm);
+
+            em.flush();
+            em.clear();
+
+            List<JMember> result = em.createQuery("select m from JMember m", JMember.class).getResultList();
+            em.createQuery("select o.address from JOrder o", JAddress.class).getResultList();
+            JMember findJm = null;
+
+            for(JMember re : result){
+                if(re.getName().equals("findJ")){
+                    findJm = re;
+                    break;
+                }
+            }
+            //영속성 컨텍스트가 관리
+            findJm.setAge(22);
+            
+            
+            //스칼라 조회시 타입 명시 X
+            List rList = em.createQuery("select m.name, m.age from JMember m").getResultList();
+            //List<Object[]> rList = ....
+            Object o = rList.get(0);
+            Object[] resultO = (Object[]) o;
+            System.out.println("resultO[0] = " + resultO[0]);
+            System.out.println("resultO[1] = " + resultO[1]);
+
+            //DTO 생성 방법
+            List<JMemberDTO> dtoList = em.createQuery("select new jpql.JMemberDTO(m.name, m.age) from JMember m", JMemberDTO.class)
+                    .getResultList();
+
+            
 
 
             tx.commit();
