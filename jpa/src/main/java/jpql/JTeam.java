@@ -33,4 +33,12 @@ public class JTeam {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<JMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<JMember> members) {
+        this.members = members;
+    }
 }

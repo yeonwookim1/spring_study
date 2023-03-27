@@ -80,7 +80,38 @@ public class JpalMain {
             List<JMemberDTO> dtoList = em.createQuery("select new jpql.JMemberDTO(m.name, m.age) from JMember m", JMemberDTO.class)
                     .getResultList();
 
-            
+
+            //페이징
+
+            List<JMember> resultList2 = em.createQuery("select m from JMember m order by m.age desc", JMember.class)
+                            .setFirstResult(1)
+                            .setMaxResults(10)
+                            .getResultList();
+
+            for(JMember jm2 : resultList2){
+                System.out.println("jm2 = " + jm2);
+            }
+
+            //조인
+            JTeam jTeam = new JTeam();
+            jTeam.setName("teamA");
+            em.persist(jTeam);
+
+            JMember joinM = new JMember();
+            joinM.setName("member1");
+            joinM.setAge(10);
+
+            joinM.changeTeam(jTeam);
+
+            em.persist(joinM);
+            em.flush();
+            em.clear();
+
+            List<JMember> resultList3 = em.createQuery(
+                    "select m from JMember m left join m.team t on t.name = 'teamA'", JMember.class).getResultList();
+
+            //외부조인 JPQL
+            //select m from JMember m left join Team t on t.name = 'teamA'
 
 
             tx.commit();

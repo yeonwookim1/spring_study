@@ -11,7 +11,7 @@ public class JMember {
     private String name;
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private JTeam team;
 
@@ -37,5 +37,20 @@ public class JMember {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void changeTeam(JTeam team){
+        this.team = team;
+        team.getMembers().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "JMember{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+//                ", team=" + team +    //toString시 양방향이 되면 무한루프
+                '}';
     }
 }
