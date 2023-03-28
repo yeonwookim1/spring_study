@@ -103,3 +103,49 @@
 - JPA는 where, having 절에서만 서브 쿼리사용 가능
 - select절도 가능(하이버네이트에서 지원)
 - from절의 서브쿼리 불가(인라인) -> join 절로 풀어서 해결, 네이티브 쿼리로 해결 
+
+
+
+
+타입
+
+- 대문자 '' 사용
+
+- 숫자 : 10L (long), 10D(double), 10F(Float)
+
+- boolean : true, false
+
+- ENUM : jpql.JMemberType.ADMIN (패키지명 포함)
+
+- ```
+  enum은 바인드변수로 해주는게 깔끔
+
+  String q = "select m.name, 'HELLO', true , m.type from JMember m where m.type = :userType";
+
+  List<Object[]> resultList4 = em.createQuery(q)
+  .setParameter("userType",JMemberType.ADMIN)
+  .getResultList();
+  ```
+
+  ​
+
+조건식
+
+- coalesce : 하나씩 조회해서 null이 아니면 반환
+- nullif : 두값이 같으면 null, 다르면 첫번째 값
+
+
+
+JPQL 함수
+
+- 기본 함수 : COCNAT(||), SUBSTRING, TRIM, LOWER, UPPER 등
+
+- 사용자 정의 함수 : 사용전 방언에 추가해야 한다.
+
+  - 사용하는 DB 방언을 상속 받고 사용자 정의 함수를 사용
+
+- ```
+  select function('group_concat', i.name) from JItem i;
+  ```
+
+  ​

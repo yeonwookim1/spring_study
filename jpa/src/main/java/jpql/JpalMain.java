@@ -37,13 +37,13 @@ public class JpalMain {
             TypedQuery<JMember> paramQuery
                     = em.createQuery("select m from JMember m where m.name = :name", JMember.class)
                     .setParameter("name", "member1678802651403");
-            JMember singleResult1 = paramQuery.getSingleResult();
+//            JMember singleResult1 = paramQuery.getSingleResult();
 
             //매소드 체인
-            JMember singleResult2 = em.createQuery("select m from JMember m where m.name = :name", JMember.class)
-                    .setParameter("name", "member1678802651403").getSingleResult();
-
-            System.out.println("singleResult2 = " + singleResult2);
+//            JMember singleResult2 = em.createQuery("select m from JMember m where m.name = :name", JMember.class)
+//                    .setParameter("name", "member1678802651403").getSingleResult();
+//
+//            System.out.println("singleResult2 = " + singleResult2);
 
 
             JMember jm = new JMember();
@@ -100,6 +100,7 @@ public class JpalMain {
             JMember joinM = new JMember();
             joinM.setName("member1");
             joinM.setAge(10);
+            joinM.setType(JMemberType.ADMIN);
 
             joinM.changeTeam(jTeam);
 
@@ -107,11 +108,35 @@ public class JpalMain {
             em.flush();
             em.clear();
 
-            List<JMember> resultList3 = em.createQuery(
-                    "select m from JMember m left join m.team t on t.name = 'teamA'", JMember.class).getResultList();
-
+//            List<JMember> resultList3 = em.createQuery(
+//                    "select m from JMember m left join m.team t on t.name = 'teamA'", JMember.class).getResultList();
+//
             //외부조인 JPQL
             //select m from JMember m left join Team t on t.name = 'teamA'
+
+            String q = "select m.name, 'HELLO', true , m.type from JMember m where m.type = :userType";
+
+            List<Object[]> resultList4 = em.createQuery(q)
+                    .setParameter("userType",JMemberType.ADMIN)
+                    .getResultList();
+            for(Object[] obj : resultList4){
+                System.out.println("obj[0] = " + obj[0]);
+                System.out.println("obj[1] = " + obj[1]);
+                System.out.println("obj[2] = " + obj[2]);
+                System.out.println("obj[3] = " + obj[3]);
+            }
+
+            String q2 = "select " +
+                        "case when m.age <=10 then '학생'" +
+                        " when m.age >= 60 then '경로'" +
+                        "else '일반요금' end " +
+                        "from JMember m";
+
+            List<String> result3 = em.createQuery(q2, String.class)
+                            .getResultList();
+            for(String s1 : result3){
+                System.out.println("s1 = " + s1);
+            }
 
 
             tx.commit();
