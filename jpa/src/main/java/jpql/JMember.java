@@ -49,10 +49,13 @@ public class JMember {
         this.type = type;
     }
 
-
     public void changeTeam(JTeam team){
         this.team = team;
         team.getMembers().add(this);
+    }
+
+    public JTeam getTeam() {
+        return team;
     }
 
     @Override

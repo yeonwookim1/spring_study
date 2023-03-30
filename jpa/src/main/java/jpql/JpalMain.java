@@ -66,8 +66,8 @@ public class JpalMain {
             }
             //영속성 컨텍스트가 관리
             findJm.setAge(22);
-            
-            
+
+
             //스칼라 조회시 타입 명시 X
             List rList = em.createQuery("select m.name, m.age from JMember m").getResultList();
             //List<Object[]> rList = ....
@@ -132,10 +132,59 @@ public class JpalMain {
                         "else '일반요금' end " +
                         "from JMember m";
 
-            List<String> result3 = em.createQuery(q2, String.class)
+            //persistance.xml에 path등록
+//            String q3 = "select function('group_concat', m.name) from JMember m";
+            String q3 = "select group_concat(m.name) from JMember m";
+
+            List<String> result3 = em.createQuery(q3, String.class)
                             .getResultList();
             for(String s1 : result3){
                 System.out.println("s1 = " + s1);
+            }
+
+            //fetch join
+            JTeam jTeam1 = new JTeam();
+            jTeam1.setName("팀A");
+            em.persist(jTeam1);
+
+            JTeam jTeam2 = new JTeam();
+            jTeam2.setName("팀B");
+            em.persist(jTeam2);
+
+            JMember jMember = new JMember();
+            jMember.setName("messi");
+            jMember.changeTeam(jTeam1);
+            em.persist(jMember);
+
+            JMember jMember2 = new JMember();
+            jMember2.setName("son");
+            jMember2.changeTeam(jTeam2);
+            em.persist(jMember2);
+
+            em.flush();
+            em.clear();
+
+            String joinQ = "select m from JMember m join fetch m.team";
+
+            List<JMember> query2 = em.createQuery(joinQ, JMember.class).getResultList();
+
+            for(JMember mm : query2){
+                //System.out.println("m.getName() = " + m.getName() + " "  + m.getTeam().getName());
+                if(mm.getTeam() == null){
+                    //이전에 삽입했던 member 중에 team이 없는 경우
+                    continue;
+                }
+                System.out.println("m = " + mm.getName() + " mm.getName() " + mm.getTeam().getName());
+            }
+
+            String joinQ2 = "select distinct m from JTeam m join fetch m.members";
+
+            List<JTeam> query3 = em.createQuery(joinQ2, JTeam.class).getResultList();
+            for(JTeam jt : query3){
+                System.out.println("jt.getName() = " + jt.getName());
+                for(JMember jtMember : jt.getMembers()){
+                    System.out.println("- member = " + jtMember);
+                }
             }
 
 

@@ -142,10 +142,51 @@ JPQL 함수
 
 - 사용자 정의 함수 : 사용전 방언에 추가해야 한다.
 
-  - 사용하는 DB 방언을 상속 받고 사용자 정의 함수를 사용
+  - 사용하는 DB 방언을 상속 받고 사용자 정의 함수를 사용(클래스 및 persistance에 등록)
 
-- ```
-  select function('group_concat', i.name) from JItem i;
+- ```java
+  String q3 = "select function('group_concat', m.name) from JMember m";
+  String q3 = "select group_concat(m.name) from JMember m";
   ```
 
   ​
+
+경로표현식
+
+- 점을 찍어 객체 그래프를 탐색하는 것
+- 상태필드 : 단순히 값을 저장하기 위한 필드(ex : m.name), 경로 탐색의 끝(탐색X)
+- 연관필드 : 연관관계를 위한 필드
+  - 단일 값 연관 필드 : @ManyToOne, @OneToOne, 대상이 엔티티,  묵시적 내부 조인 발생(탐색O)
+  - 컬렉션 값 연관 필드 : @OneToMany, @ManyToMany, 대상이 컬렉션,  묵시적 내부 조인 발생(탐색X)
+  - FROM 절에서 조인을 하여 alias를 사용하면 컬렉션 값에 대한 필드 값을 가져올 수 있음
+- 실무에서 명시적 조인 사용, 묵시적 조인은 파악하기 어려움
+
+
+
+Fetch Join
+
+- SQL식이 아니라 JPQL에서 성능최적화를 위해 제공하는 기능
+
+- 연관된 엔티티나 컬렉션을 SQL 한번에 함께 조회하는 기능
+
+- ```sql
+  //jpql
+  select m from JMember m join fetch m.team
+
+  //sql
+  select m.*, t.* from member m inner join team t on m.team_id = t.id
+  ```
+
+- join을 사용하면  n + 1 문제를 해결할 수 있다.
+
+- **지연로딩보다 fetch join이 우선
+
+- join으로 인한 중복 제거 : distinct
+
+  - SQL에 distinct(같은 식별자를 가진 엔티티를 제거)
+  - 어플리케이션에서 중복제거 로직 추가
+
+- fetch join vs join
+
+  - join은 연관된 엔티티를 조회하지 않음
+  - fetch join을 사용할 때는 연관된 엔티티도 함께 조회, 객체 그래프를 한번에 조회하는 개념
