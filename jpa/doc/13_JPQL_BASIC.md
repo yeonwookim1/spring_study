@@ -207,3 +207,29 @@ Fetch Join
   - 최적화가 필요한 곳은 페치 조인 사용
   - 객체 그래프를 유지할 때 사용하면 효과적
   - 여러 테이블을 조인해서 전혀 다른 결과를 내야하면 페치 조인보다는 일반 조인을 사용하여 DTO로 반환하는 것이 효과적
+
+
+
+- 다형성 쿼리
+
+  - 조회 대상을 특정 자식으로 한정
+
+  - ```
+    //JPQL
+    select i from Item i where type(i) IN (Book, Item)
+
+    //SQL
+    select i from i where i.DTYPE in ('B', 'I')
+    ```
+
+  - TREAT (다운 캐스팅 느낌)
+
+  - ```
+    //JPQL
+    select i from Item i where threat(i as Book).auther = 'kim'
+
+    //SQL
+    select i from i where i.DTYPE = 'B' and i.auther = 'kim'
+    ```
+
+    ​
