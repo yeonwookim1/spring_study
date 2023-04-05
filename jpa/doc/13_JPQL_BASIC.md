@@ -232,4 +232,84 @@ Fetch Join
     select i from i where i.DTYPE = 'B' and i.auther = 'kim'
     ```
 
+
+
+- 엔티티 직접 사용
+
+  - JPQL에서 엔티티를 직접 사용하면 SQL에서 해당 엔티티의 기본 키 값을 사용
+
+  - ```
+    //JPQL
+    "select m from JMember m where m = :member";
+    "select m from JMember m where m.id = :member_id";
+
+    //위의 두 쿼리 둘 다 동일한 SQL이 실행된다.
+
+    //SQL
+    select m from JMember m where m.id = member_id;
+    ```
+
     ​
+
+- Named 쿼리 - 어노테이션
+
+  - 쿼리에 이름을 선언해서 사용
+
+  - 정적 쿼리, 어노테이션, XML에 정의
+
+  - 애플리케이션 로딩 시점에 초기화 후 재사용(캐시에 담아둠)
+
+  - 로딩 시점에 검증
+
+  - ```java
+    //entity에 선언
+    @Entity
+    @NamedQuery(
+            name = "JMember.findByName",
+            query = "select m from JMember m where m.name = :username"
+    )
+    ...
+      
+    em.createNamedQuery("JMember.findByName", JMember.class)
+      				.setParameter("username", "son")
+      				.getResultList();
+    ```
+
+  - XML에 정의 하여 사용할 수도 있다.
+
+  - XML이 항상 우선권을 가진다.
+
+    ​
+
+
+
+- 벌크연산
+
+  - UPDATE문과 delete문을 위해 사용(ex : 조건에 따른 100만건을 update 하기 위해)
+
+  - 쿼리 한 번으로 여러 테이블의 로우 변경(엔티티) 
+
+  - executeUpdate()의 결과는 영향 받은 엔티티의 수를 반환
+
+  - INSERT는 하이버네이트에서만 지원
+
+  - ```java
+    jMember3.setName("son");
+    ...
+    String calQuery = "update JMember m set m.name = 'KYW' where m.name = 'son'";
+    //execute시 FLUSH 자동 호출
+    int resultCnt = em.createQuery(calQuery).executeUpdate();
+
+    //애플리케이션에서 가지고 있는 값으로 나옴
+    System.out.println("jMember3.getName() = " + jMember3.getName()); 
+
+    //따라서 초기화후 다시 값을 가져와야함
+    em.clear();
+    ```
+
+  - 벌크 연산은 영속성 컨텍스트를 무시하고 직접 쿼리
+
+    1. 벌크 연산을 먼저 실행
+
+
+    2. 벌크 연산 수행 후 연속성 콘텍스트 초기화(em.clear())

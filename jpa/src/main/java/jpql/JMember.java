@@ -3,6 +3,10 @@ package jpql;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(
+        name = "JMember.findByName",
+        query = "select m from JMember m where m.name = :username"
+)
 public class JMember {
 
     @Id

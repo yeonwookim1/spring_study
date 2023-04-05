@@ -186,6 +186,37 @@ public class JpalMain {
                     System.out.println("- member = " + jtMember);
                 }
             }
+            
+            //엔티티 직접 사용
+            JMember jMember3 = new JMember();
+            jMember3.setName("son");
+            jMember3.changeTeam(jTeam2);
+            em.persist(jMember3);
+
+            String joinQ3 = "select m from JMember m where m = :member";
+
+            List<JMember> query4 = em.createQuery(joinQ3, JMember.class)
+                    .setParameter("member", jMember3)
+                    .getResultList();
+
+            for(JMember jm2 : query4){
+                System.out.println("jt.getName() = " + jm2.getName());
+            }
+
+            //namedQuery
+            List<JMember> query5 = em.createNamedQuery("JMember.findByName", JMember.class)
+                    .setParameter("username", "son")
+                    .getResultList();
+            for(JMember nameJm : query5){
+                System.out.println("namedQuery name = " + nameJm.getName());
+            }
+
+            //벌크 연산
+            String calQuery = "update JMember m set m.name = 'KYW' where m.name = 'son'";
+            //execute시 FLUSH 자동 호출
+            int resultCnt = em.createQuery(calQuery).executeUpdate();
+            System.out.println("resultCnt = " + resultCnt);
+            System.out.println("jMember3.getName() = " + jMember3.getName()); //애플리케이션에서 가지고 있는 값으로 나옴
 
 
             tx.commit();
